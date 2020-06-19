@@ -1,0 +1,13 @@
+protoc:
+  version: 3.8.0
+lint:
+  group: uber2
+
+generate:
+  go_options:
+    import_path: tutorial
+  plugins:
+    - name: go
+      type: go
+      flags: plugins=grpc
+      output: gen/go

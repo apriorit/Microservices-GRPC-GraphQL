@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package tutorial.grpc.holders.v1;
+
+import "proto/holders/holders_messages.proto";
+
+// API for managing customers.
+service HoldersAPI {
+  // Get all customers
+  rpc ListHolders(ListHoldersRequest) returns (ListHoldersResponse);
+  // Get customer by book id
+  rpc GetHolderByBookId(GetHolderByBookIdRequest) returns (GetHolderByBookIdResponse);
+  // Get customer by id.
+  rpc GetHolder(GetHolderRequest) returns (GetHolderResponse);
+  // Add new customer.
+  rpc AddHolder(AddHolderRequest) returns (AddHolderResponse);
+  // Update customer.
+  rpc UpdateHolder(UpdateHolderRequest) returns (UpdateHolderResponse);
+}
+
+message ListHoldersRequest {
+}
+
+message ListHoldersResponse {
+  repeated Holder holders = 1;
+}
+
+message GetHolderByBookIdRequest {
+  string id = 1;
+}
+
+message GetHolderByBookIdResponse {
+  Holder holder = 1;
+}
+
+message GetHolderRequest {
+  string id = 1;
+}
+
+message GetHolderResponse {
+  Holder holder = 1;
+}
+
+message AddHolderRequest {
+  Holder holder = 1;
+}
+
+message AddHolderResponse {
+  Holder holder = 1;
+}
+
+message UpdateHolderRequest {
+  Holder holder = 1;
+}
+
+message UpdateHolderResponse {
+  Holder holder = 1;
+}

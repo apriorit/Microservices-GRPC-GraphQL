@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package tutorial.grpc.holders.v1;
+
+// Customer definition.
+message Holder {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string phone = 4;
+  string email = 5;
+  repeated string held_books = 6;
+}

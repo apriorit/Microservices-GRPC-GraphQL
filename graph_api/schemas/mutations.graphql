@@ -1,0 +1,9 @@
+type Mutation {
+  # Books
+  createBook(inputData: BookInput!): Book
+  deleteBook(id: String!): Boolean!
+  takeBookInUse(holderId: String!, bookId: String!): Boolean!
+  returnBook(holderId: String!, bookId: String!): Boolean!
+  # Holders
+  createHolder(inputData: HolderInput!): Holder
+}

@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package tutorial.grpc.books.v1;
+
+import "proto/books/books_messages.proto";
+
+// API for managing books.
+service BooksAPI {
+  // Get all books
+  rpc ListBooks(ListBooksRequest) returns (ListBooksResponse);
+  // Get book by id.
+  rpc GetBook(GetBookRequest) returns (GetBookResponse);
+  // Get book by ids.
+  rpc GetBooks(GetBooksRequest) returns (GetBooksResponse);
+  // Get book by title.
+  rpc GetBookByISBN(GetBookByISBNRequest) returns (GetBookByISBNResponse);
+  // Add new book.
+  rpc AddBook(AddBookRequest) returns (AddBookResponse);
+  // Delete book.
+  rpc DeleteBook(DeleteBookRequest) returns (DeleteBookResponse);
+}
+
+message ListBooksRequest {
+}
+
+message ListBooksResponse {
+  repeated Book books = 1;
+}
+
+message GetBookRequest {
+  string id = 1;
+}
+
+message GetBookResponse {
+  Book book = 1;
+}
+
+message GetBooksRequest {
+  repeated string ids = 1;
+}
+
+message GetBooksResponse {
+  repeated Book books = 1;
+}
+
+message GetBookByISBNRequest {
+  string isbn = 1;
+}
+
+message GetBookByISBNResponse {
+  Book book = 1;
+}
+
+message AddBookRequest {
+  Book book = 1;
+}
+
+message AddBookResponse {
+  Book book = 1;
+}
+
+message DeleteBookRequest {
+  string id = 1;
+}
+
+message DeleteBookResponse {
+}

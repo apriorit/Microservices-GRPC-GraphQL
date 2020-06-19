@@ -1,0 +1,16 @@
+type Holder {
+	id: String!
+	firstName: String! 
+	lastName: String!
+	phone: String!
+	email: String!
+	heldBooks: [Book!]! 
+}
+
+input HolderInput {
+	id: String  
+	firstName: String  
+	lastName: String  
+	phone: String  
+	email: String  
+}

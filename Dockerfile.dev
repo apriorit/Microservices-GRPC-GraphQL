@@ -1,0 +1,9 @@
+FROM golang:1.14-stretch
+
+WORKDIR /tutorial
+COPY ./go.mod .
+COPY ./go.sum .
+RUN go mod download
+EXPOSE 80
+EXPOSE 60001
+WORKDIR /tutorial

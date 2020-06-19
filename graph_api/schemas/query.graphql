@@ -1,0 +1,5 @@
+type Query {
+  # Books
+  books(id: String, isbn: String, holderId: String): [Book!]
+  holders(id: String, bookId: String): [Holder!]
+}
