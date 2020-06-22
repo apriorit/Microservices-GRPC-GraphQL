@@ -1,8 +1,8 @@
 type Book {
-	id: String 
-	author: String 
-	title: String 
-	isbn: String 
+	id: String!
+	author: String!
+	title: String!
+	isbn: String!
 }
 
 input BookInput {

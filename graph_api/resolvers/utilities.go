@@ -11,10 +11,10 @@ import (
 
 func service2GraphBook(book *booksv1.Book) *model.Book {
 	return &model.Book{
-		ID:     &book.Id,
-		Author: &book.Author,
-		Title:  &book.Title,
-		Isbn:   &book.Isbn,
+		ID:     book.Id,
+		Author: book.Author,
+		Title:  book.Title,
+		Isbn:   book.Isbn,
 	}
 }
 

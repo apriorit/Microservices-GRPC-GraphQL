@@ -15,18 +15,14 @@ func (r *holderResolver) HeldBooks(ctx context.Context, obj *model.Holder) ([]*m
 	ctx, cancelFn := context.WithTimeout(context.Background(), time.Second*2)
 	defer cancelFn()
 
-	books := []*model.Book{}
-	for _, bookId := range obj.HeldBooks {
-		getBookResponse, err := r.services.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
-		if err != nil {
-			return nil, err
-		}
-		books = append(books, &model.Book{
-			ID:     &getBookResponse.Book.Id,
-			Author: &getBookResponse.Book.Author,
-			Title:  &getBookResponse.Book.Title,
-			Isbn:   &getBookResponse.Book.Isbn,
-		})
+	resp, err := r.services.Books().GetBooks(ctx, &booksv1.GetBooksRequest{Ids: obj.HeldBooks})
+	if err != nil {
+		return nil, err
+	}
+
+	books := make([]*model.Book, len(resp.Books))
+	for i, book := range resp.Books {
+		books[i] = service2GraphBook(book)
 	}
 
 	return books, nil

@@ -3,10 +3,10 @@
 package model
 
 type Book struct {
-	ID     *string `json:"id"`
-	Author *string `json:"author"`
-	Title  *string `json:"title"`
-	Isbn   *string `json:"isbn"`
+	ID     string `json:"id"`
+	Author string `json:"author"`
+	Title  string `json:"title"`
+	Isbn   string `json:"isbn"`
 }
 
 type BookInput struct {
