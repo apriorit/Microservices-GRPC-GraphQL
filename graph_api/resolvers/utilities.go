@@ -5,8 +5,8 @@ import (
 	"log"
 	booksv1 "tutorial/gen/go/proto/books"
 	holdersv1 "tutorial/gen/go/proto/holders"
-	apiHolder "tutorial/graph_api/api_holder"
 	"tutorial/graph_api/model"
+	"tutorial/graph_api/services"
 )
 
 func service2GraphBook(book *booksv1.Book) *model.Book {
@@ -53,14 +53,14 @@ func softDeference(field *string) string {
 	return *field
 }
 
-func getBookAndHolder(ctx context.Context, ah apiHolder.Services, holderId, bookId string) (*booksv1.Book, *holdersv1.Holder, error) {
+func getBookAndHolder(ctx context.Context, s services.Services, holderId, bookId string) (*booksv1.Book, *holdersv1.Holder, error) {
 	log.Printf("Request data. HolderID: %s, bookID: %s", holderId, bookId)
 
-	getHolderResponse, err := ah.Holders().GetHolder(ctx, &holdersv1.GetHolderRequest{Id: holderId})
+	getHolderResponse, err := s.Holders().GetHolder(ctx, &holdersv1.GetHolderRequest{Id: holderId})
 	if err != nil {
 		return nil, nil, err
 	}
-	getBookResponse, err := ah.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
+	getBookResponse, err := s.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
 	if err != nil {
 		return nil, nil, err
 	}

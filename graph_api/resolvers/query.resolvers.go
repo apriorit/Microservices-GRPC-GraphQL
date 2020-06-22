@@ -17,26 +17,26 @@ func (r *queryResolver) Books(ctx context.Context, id *string, isbn *string, hol
 
 	if id != nil {
 		log.Printf("Book id: %s", *id)
-		getBookResponse, err := r.apiHolder.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: *id})
+		getBookResponse, err := r.services.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: *id})
 		if err != nil {
 			return nil, err
 		}
 		books = append(books, service2GraphBook(getBookResponse.Book))
 	} else if isbn != nil {
 		log.Printf("Book isbn: %s", *isbn)
-		getBookByISBNResponse, err := r.apiHolder.Books().GetBookByISBN(ctx, &booksv1.GetBookByISBNRequest{Isbn: *isbn})
+		getBookByISBNResponse, err := r.services.Books().GetBookByISBN(ctx, &booksv1.GetBookByISBNRequest{Isbn: *isbn})
 		if err != nil {
 			return nil, err
 		}
 		books = append(books, service2GraphBook(getBookByISBNResponse.Book))
 	} else if holderID != nil {
-		getHolderResponse, err := r.apiHolder.Holders().GetHolder(ctx, &holdersv1.GetHolderRequest{Id: *holderID})
+		getHolderResponse, err := r.services.Holders().GetHolder(ctx, &holdersv1.GetHolderRequest{Id: *holderID})
 		if err != nil {
 			return nil, err
 		}
 
 		for _, bookId := range getHolderResponse.Holder.HeldBooks {
-			getBookResponse, err := r.apiHolder.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
+			getBookResponse, err := r.services.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
 			if err != nil {
 				return nil, err
 			}
@@ -44,7 +44,7 @@ func (r *queryResolver) Books(ctx context.Context, id *string, isbn *string, hol
 		}
 
 	} else {
-		listBookResponse, err := r.apiHolder.Books().ListBooks(ctx, &booksv1.ListBooksRequest{})
+		listBookResponse, err := r.services.Books().ListBooks(ctx, &booksv1.ListBooksRequest{})
 		if err != nil {
 			return nil, err
 		}
@@ -61,21 +61,21 @@ func (r *queryResolver) Holders(ctx context.Context, id *string, bookID *string)
 
 	if id != nil {
 		log.Printf("Holder id: %s", *id)
-		getHolderResponse, err := r.apiHolder.Holders().GetHolder(ctx, &holdersv1.GetHolderRequest{Id: *id})
+		getHolderResponse, err := r.services.Holders().GetHolder(ctx, &holdersv1.GetHolderRequest{Id: *id})
 		if err != nil {
 			return nil, err
 		}
 		holders = append(holders, service2GraphHolder(getHolderResponse.Holder))
 	} else if bookID != nil {
 		log.Printf("Book id: %s", *bookID)
-		getHolderByBookIdResponse, err := r.apiHolder.Holders().GetHolderByBookId(ctx, &holdersv1.GetHolderByBookIdRequest{Id: *bookID})
+		getHolderByBookIdResponse, err := r.services.Holders().GetHolderByBookId(ctx, &holdersv1.GetHolderByBookIdRequest{Id: *bookID})
 		if err != nil {
 			return nil, err
 		}
 		holders = append(holders, service2GraphHolder(getHolderByBookIdResponse.Holder))
 	} else {
 		log.Printf("ALl books will be retrieved")
-		listHoldersResponse, err := r.apiHolder.Holders().ListHolders(ctx, &holdersv1.ListHoldersRequest{})
+		listHoldersResponse, err := r.services.Holders().ListHolders(ctx, &holdersv1.ListHoldersRequest{})
 		if err != nil {
 			return nil, err
 		}

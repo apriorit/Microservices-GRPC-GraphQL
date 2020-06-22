@@ -5,13 +5,13 @@ package resolvers
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 import (
-	apiHolder "tutorial/graph_api/api_holder"
+	"tutorial/graph_api/services"
 )
 
 type Resolver struct {
-	apiHolder apiHolder.Services
+	services services.Services
 }
 
-func NewResolver(ah apiHolder.Services) *Resolver {
-	return &Resolver{apiHolder: ah}
+func NewResolver(s services.Services) *Resolver {
+	return &Resolver{services: s}
 }

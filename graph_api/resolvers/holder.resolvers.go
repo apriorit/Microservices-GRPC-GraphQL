@@ -17,7 +17,7 @@ func (r *holderResolver) HeldBooks(ctx context.Context, obj *model.Holder) ([]*m
 
 	books := []*model.Book{}
 	for _, bookId := range obj.HeldBooks {
-		getBookResponse, err := r.apiHolder.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
+		getBookResponse, err := r.services.Books().GetBook(ctx, &booksv1.GetBookRequest{Id: bookId})
 		if err != nil {
 			return nil, err
 		}

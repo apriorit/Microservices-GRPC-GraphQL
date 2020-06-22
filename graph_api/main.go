@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	apiHolder "tutorial/graph_api/api_holder"
 	"tutorial/graph_api/gen"
 	"tutorial/graph_api/resolvers"
+	"tutorial/graph_api/services"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -37,7 +37,7 @@ func main() {
 	}
 
 	// Connect to the services
-	svcs, err := apiHolder.NewServicesHolder(apiHolder.ServicesConfig{
+	svcs, err := services.NewServicesKeeper(services.ServicesConfig{
 		BooksSvc:   booksSvc,
 		HoldersSvc: holdersSvc,
 	})

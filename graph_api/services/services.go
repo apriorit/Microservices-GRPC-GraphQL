@@ -1,4 +1,4 @@
-package api_holder
+package services
 
 import (
 	"io"
@@ -28,7 +28,7 @@ type Services interface {
 	Holders() holdersv1.HoldersAPIClient
 }
 
-func NewServicesHolder(conf ServicesConfig) (Services, error) {
+func NewServicesKeeper(conf ServicesConfig) (Services, error) {
 	log.Printf("Connection to Books Service: %s...", conf.BooksSvc)
 	booksConnection, err := grpc.Dial(conf.BooksSvc, grpc.WithInsecure())
 	if err != nil {

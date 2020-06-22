@@ -17,7 +17,7 @@ func (r *mutationResolver) CreateBook(ctx context.Context, inputData model.BookI
 
 	book := graph2ServiceBookInput(&inputData)
 
-	addBookResponse, err := r.apiHolder.Books().AddBook(ctx, &booksv1.AddBookRequest{Book: book})
+	addBookResponse, err := r.services.Books().AddBook(ctx, &booksv1.AddBookRequest{Book: book})
 	if err != nil {
 		return nil, err
 	}
@@ -26,12 +26,12 @@ func (r *mutationResolver) CreateBook(ctx context.Context, inputData model.BookI
 }
 
 func (r *mutationResolver) DeleteBook(ctx context.Context, id string) (bool, error) {
-	_, err := r.apiHolder.Books().DeleteBook(ctx, &booksv1.DeleteBookRequest{Id: id})
+	_, err := r.services.Books().DeleteBook(ctx, &booksv1.DeleteBookRequest{Id: id})
 	return err == nil, err
 }
 
 func (r *mutationResolver) TakeBookInUse(ctx context.Context, holderID string, bookID string) (bool, error) {
-	book, holder, err := getBookAndHolder(ctx, r.apiHolder, holderID, bookID)
+	book, holder, err := getBookAndHolder(ctx, r.services, holderID, bookID)
 	if err != nil {
 		return false, err
 	}
@@ -39,7 +39,7 @@ func (r *mutationResolver) TakeBookInUse(ctx context.Context, holderID string, b
 
 	// Add book id to holder
 	holder.HeldBooks = append(holder.HeldBooks, bookID)
-	_, err = r.apiHolder.Holders().UpdateHolder(ctx, &holdersv1.UpdateHolderRequest{Holder: holder})
+	_, err = r.services.Holders().UpdateHolder(ctx, &holdersv1.UpdateHolderRequest{Holder: holder})
 	if err != nil {
 		return false, err
 	}
@@ -49,7 +49,7 @@ func (r *mutationResolver) TakeBookInUse(ctx context.Context, holderID string, b
 }
 
 func (r *mutationResolver) ReturnBook(ctx context.Context, holderID string, bookID string) (bool, error) {
-	book, holder, err := getBookAndHolder(ctx, r.apiHolder, holderID, bookID)
+	book, holder, err := getBookAndHolder(ctx, r.services, holderID, bookID)
 	if err != nil {
 		return false, err
 	}
@@ -62,7 +62,7 @@ func (r *mutationResolver) ReturnBook(ctx context.Context, holderID string, book
 		}
 	}
 
-	_, err = r.apiHolder.Holders().UpdateHolder(ctx, &holdersv1.UpdateHolderRequest{Holder: holder})
+	_, err = r.services.Holders().UpdateHolder(ctx, &holdersv1.UpdateHolderRequest{Holder: holder})
 	if err != nil {
 		return false, err
 	}
@@ -76,7 +76,7 @@ func (r *mutationResolver) CreateHolder(ctx context.Context, inputData model.Hol
 
 	holder := graph2ServiceHolderInput(&inputData)
 
-	addHolderResponse, err := r.apiHolder.Holders().AddHolder(ctx, &holdersv1.AddHolderRequest{Holder: holder})
+	addHolderResponse, err := r.services.Holders().AddHolder(ctx, &holdersv1.AddHolderRequest{Holder: holder})
 	if err != nil {
 		return nil, err
 	}
